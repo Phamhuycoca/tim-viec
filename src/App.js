@@ -2,7 +2,14 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const App = () => {
-  const data = ['Item 1', 'Item 2', 'Item 3'];
+  const data = [
+    'Item 1', 'Item 2', 'Item 3',
+    'Item 1', 'Item 2', 'Item 3',
+    'Item 1', 'Item 2', 'Item 3',
+    'Item 1', 'Item 2', 'Item 3',
+    'Item 1', 'Item 2', 'Item 3',
+    'Item 1', 'Item 2', 'Item 3'
+  ];
 
   return (
     <div>
