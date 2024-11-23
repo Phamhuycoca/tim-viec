@@ -4,16 +4,16 @@ import axios from "axios";
 console.log('process.env.REACT_APP_BASE_URL', process.env.REACT_APP_BASE_URL);
 
 // Cấu hình axios với base URL từ biến môi trường
-const base_URL = axios.create({
-    baseURL: '',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    withCredentials: false
+const apiClient = axios.create({
+  baseURL: process.env.REACT_APP_API_BASE_URL || 'https://api.example.com',
+  timeout: 10000,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
 // Thêm interceptors để xử lý lỗi toàn cục nếu cần
-base_URL.interceptors.response.use(
+apiClient.interceptors.response.use(
   response => response,
   error => {
     console.log(error.status)
@@ -25,7 +25,7 @@ base_URL.interceptors.response.use(
 // Phương thức tạo (POST)
 const createRequest = async (endpoint, data) => {
   try {
-    const response = await base_URL.post(endpoint, data);
+    const response = await apiClient.post(endpoint, data);
     return response.data;
   } catch (error) {
     console.error('Error creating data:', error);
@@ -36,7 +36,7 @@ const createRequest = async (endpoint, data) => {
 // Phương thức lấy nhiều dữ liệu (GET)
 const getManyRequest = async (endpoint) => {
   try {
-    const response = await base_URL.get(endpoint);
+    const response = await apiClient.get(endpoint);
     return response.data;
   } catch (error) {
     console.error('Error reading data:', error);
@@ -47,7 +47,7 @@ const getManyRequest = async (endpoint) => {
 // Phương thức cập nhật (PUT)
 const updateRequest = async (endpoint, data) => {
   try {
-    const response = await base_URL.put(endpoint, data);
+    const response = await apiClient.put(endpoint, data);
     return response.data;
   } catch (error) {
     console.error('Error updating data:', error);
@@ -58,7 +58,7 @@ const updateRequest = async (endpoint, data) => {
 // Phương thức xóa (DELETE)
 const deleteRequest = async (endpoint) => {
   try {
-    const response = await base_URL.delete(endpoint);
+    const response = await apiClient.delete(endpoint);
     return response.data;
   } catch (error) {
     console.error('Error deleting data:', error);
@@ -69,7 +69,7 @@ const deleteRequest = async (endpoint) => {
 // Phương thức lấy dữ liệu theo ID (GET)
 const getByIdRequest = async (endpoint) => {
   try {
-    const response = await base_URL.get(endpoint); // Sửa từ DELETE thành GET
+    const response = await apiClient.get(endpoint); // Sửa từ DELETE thành GET
     return response.data;
   } catch (error) {
     console.error('Error getting data by ID:', error);
